@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kisanmitra-offline-cache-v1';
+const CACHE_NAME = 'kisanmitra-offline-cache-v2';
 const OFFLINE_URL = '/offline';
 
 self.addEventListener('install', (event) => {
@@ -7,8 +7,8 @@ self.addEventListener('install', (event) => {
       return cache.addAll([
         OFFLINE_URL,
         '/manifest.json',
-        '/icons/icon-192.png',
-        '/icons/icon-512.png',
+        '/icons/icon-192.svg',
+        '/icons/icon-512.svg',
         '/',
         '/market',
         '/dashboard'

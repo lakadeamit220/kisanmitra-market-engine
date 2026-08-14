@@ -16,13 +16,13 @@ export default function MarketPage() {
 
   useEffect(() => {
     const p = loadProfile();
-    const activeProfile = p || {
-      name: 'Ramesh Patil', district: 'Nashik', crop: 'Onion',
-      quantity: 120, stage: 'Near Harvest', language: 'Marathi',
-    };
-    setProfile(activeProfile);
-    setRankedMandis(rankMandis(mandis, activeProfile));
-  }, []);
+    if (!p) {
+      router.push('/');
+      return;
+    }
+    setProfile(p);
+    setRankedMandis(rankMandis(mandis, p));
+  }, [router]);
 
   if (!profile || rankedMandis.length === 0) return null;
 

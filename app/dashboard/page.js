@@ -59,7 +59,7 @@ export default function DashboardPage() {
           <span className="group-hover:translate-x-0.5 transition-transform inline-block">→</span>
         </button>
 
-        <ActionCards />
+        <ActionCards profile={profile} />
       </div>
     </main>
   );
