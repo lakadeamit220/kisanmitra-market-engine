@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# KisanMitra Market Engine
 
-## Getting Started
+KisanMitra is a Progressive Web Application (PWA) designed to help farmers in Maharashtra make data-driven decisions on where to sell their crops. The application calculates the true "Net Realization" (profit after transport, market fees, commission, and loading charges) across multiple APMC Mandis. By comparing regional prices against exact logistical deductions, it protects farmers from relying solely on headline prices which are often misleading due to hidden local transport costs.
 
-First, run the development server:
+### Quick Deploy
 
+Click the button below to deploy your own instance of KisanMitra instantly to Vercel. 
+Note: The Gemini API Key is built into the codebase for this specific deployment, making this a zero-configuration launch.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flakadeamit220%2Fkisanmitra-market-engine)
+
+---
+
+## Technical Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Styling**: Tailwind CSS v4 (Custom Light Sage-Green Theme)
+- **Artificial Intelligence**: Google Gemini-2.0-Flash API
+- **Deployment**: Vercel
+- **Architecture**: Progressive Web App (Offline-capable via Service Worker)
+
+## Application Features
+
+1. **Farmer Profiling**: Users input their specific name, district, crop type, and harvest stage.
+2. **Dashboard**: Generates three dynamic, color-coded action plans (e.g., immediate harvest advisories, weather warnings, or warnings to avoid distant markets).
+3. **Market Engine**: Iterates over 20+ realistic APMC markets across Maharashtra (Nashik, Kolhapur, Solapur, Pune, etc.) to perform precise net realization mathematics based on the user's base location and quantity.
+4. **AI Explanation**: Leverages Google Gemini to actively interpret the numerical comparison and provide simple, actionable language advising the farmer why a specific mandi is computationally better.
+5. **Offline Support**: Includes a strict fallback offline page and custom service worker for weak mobile networks.
+
+## Local Installation Guide
+
+### Prerequisites
+- Node.js (Version 18 or higher)
+- npm or yarn
+
+### Step 1: Clone the repository, navigate, and install dependencies
+```bash
+git clone https://github.com/lakadeamit220/kisanmitra-market-engine.git
+cd kisanmitra-market-engine
+npm install
+```
+
+### Step 2: Configure Environment Variables
+Create a file named `.env.local` in the root directory and add your Google Gemini API Key.
+```
+GEMINI_API_KEY=your_actual_gemini_api_key_here
+```
+
+### Step 3: Run the Development Server
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Build and Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To build the application for production testing:
+```bash
+npm run build
+npm run start
+```
