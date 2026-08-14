@@ -8,24 +8,20 @@ export default function AIExplanation({ rankedMandis, profile }) {
   const [error, setError] = useState('');
   const [fetched, setFetched] = useState(false);
 
-  // Auto-fetch explanation when the component is mounted (user clicks "Why this recommendation?")
   useEffect(() => {
+    if (fetched) return;
+    
     async function fetchExplanation() {
-      if (fetched) return;
-      
       setLoading(true);
       setError('');
-      
       try {
         const res = await fetch('/api/explain', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ rankedMandis, farmerProfile: profile }),
         });
-        
         const data = await res.json();
-        if (data.error || !res.ok) throw new Error(data.error || 'Failed to generate explanation');
-        
+        if (!res.ok || data.error) throw new Error(data.error || 'Unknown error');
         setExplanation(data.explanation);
         setFetched(true);
       } catch (e) {
@@ -34,44 +30,40 @@ export default function AIExplanation({ rankedMandis, profile }) {
         setLoading(false);
       }
     }
-
     fetchExplanation();
-  }, [fetched, profile, rankedMandis]);
+  }, [fetched, rankedMandis, profile]);
 
   return (
-    <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 space-y-3 mt-6 shadow-md shadow-amber-500/10">
-      <div className="flex items-center gap-2 mb-1 border-b border-amber-200/50 pb-3">
-        <span className="text-2xl filter drop-shadow-sm">🤖</span>
-        <h3 className="font-bold text-amber-900 tracking-tight text-lg">KisanMitra AI Explains</h3>
+    <div className="mt-4 bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+      <div className="border-b border-slate-100 pb-3 mb-4">
+        <h3 className="font-bold text-slate-900 text-sm">AI Market Analysis</h3>
+        <p className="text-xs text-slate-400 mt-0.5">Powered by Google Gemini</p>
       </div>
-      
+
       {loading && (
-        <div className="flex items-center gap-3 text-amber-700 py-4 font-medium animate-pulse">
-          <Loader2 className="animate-spin text-amber-500" size={24} />
+        <div className="flex items-center gap-2 text-slate-500 text-sm py-3">
+          <Loader2 size={16} className="animate-spin text-brand-500" />
           Analysing your market options...
         </div>
       )}
-      
+
       {error && (
-        <div className="bg-red-50 text-red-700 p-3 rounded-xl text-sm border border-red-200">
-          <p className="font-semibold mb-1">Could not load AI explanation</p>
-          <p className="opacity-90">{error}</p>
-          <button 
+        <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
+          <p className="font-semibold">Could not load analysis</p>
+          <p className="text-xs mt-1 text-red-500">{error}</p>
+          <button
             onClick={() => setFetched(false)}
-            className="mt-2 text-xs font-bold underline hover:text-red-900"
+            className="mt-2 text-xs font-semibold underline"
           >
-            Try Again
+            Retry
           </button>
         </div>
       )}
-      
+
       {explanation && (
-        <div className="text-gray-800 leading-relaxed font-medium">
-          {/* Render newlines properly if returned by Gemini */}
-          {explanation.split('\n').map((line, i) => (
-            <p key={i} className={`${line.trim() === '' ? 'h-3' : 'mb-2'}`}>
-              {line}
-            </p>
+        <div className="text-sm text-slate-700 leading-relaxed space-y-2">
+          {explanation.split('\n').filter(l => l.trim()).map((line, i) => (
+            <p key={i}>{line}</p>
           ))}
         </div>
       )}

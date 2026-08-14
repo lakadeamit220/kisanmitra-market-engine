@@ -2,33 +2,22 @@
 
 export default function OfflinePage() {
   return (
-    <main className="min-h-screen bg-brand-900 flex flex-col items-center justify-center text-white p-8 text-center relative overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute top-10 right-10 w-64 h-64 bg-brand-800 rounded-full blur-3xl opacity-50"></div>
-      <div className="absolute bottom-10 left-10 w-64 h-64 bg-black/20 rounded-full blur-3xl opacity-50"></div>
-
-      <div className="relative z-10 flex flex-col items-center max-w-sm">
-        <div className="text-7xl mb-6 drop-shadow-lg filter bg-white/10 p-6 rounded-full inline-block backdrop-blur-sm border border-white/20">
-          🌾
+    <main className="min-h-screen bg-brand-800 flex flex-col items-center justify-center text-white px-6 text-center">
+      <div className="max-w-sm w-full">
+        <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/20">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 3l18 18M8.288 8.288A7.5 7.5 0 0120.49 17.49M1.51 6.51A7.5 7.5 0 0110.5 4.5c2.17 0 4.13.92 5.48 2.4M12 12v.01" />
+          </svg>
         </div>
-
-        <h1 className="text-3xl font-black tracking-tight mb-3">You are offline</h1>
-
-        <p className="text-brand-100 text-lg mb-8 leading-relaxed font-medium">
-          KisanMitra needs internet to fetch the latest mandi prices and AI advice.
+        <h1 className="text-2xl font-bold mb-2">No Connection</h1>
+        <p className="text-brand-100 text-sm leading-relaxed mb-8">
+          KisanMitra requires an internet connection to fetch live market prices and AI recommendations. Please check your mobile data or Wi-Fi and try again.
         </p>
-
-        <div className="bg-black/20 rounded-2xl p-4 w-full border border-white/10 shadow-inner">
-          <p className="text-brand-200 text-sm">
-            Please reconnect your mobile data or Wi-Fi and try again.
-          </p>
-        </div>
-
         <button
           onClick={() => window.location.reload()}
-          className="mt-8 bg-white text-brand-900 py-3 px-8 rounded-full font-bold shadow-lg hover:bg-gray-100 transition-colors active:scale-95"
+          className="bg-white text-brand-800 font-semibold py-3 px-8 rounded-xl text-sm hover:bg-brand-50 active:scale-95 transition-all"
         >
-          Try Again
+          Retry
         </button>
       </div>
     </main>

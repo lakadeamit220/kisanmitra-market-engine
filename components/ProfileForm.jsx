@@ -2,6 +2,14 @@
 import { useState } from 'react';
 import { saveProfile } from '@/lib/storage';
 import { useRouter } from 'next/navigation';
+import { ChevronDown } from 'lucide-react';
+
+const DISTRICTS = ['Nashik', 'Pune', 'Ahmednagar', 'Aurangabad', 'Solapur', 'Kolhapur', 'Satara', 'Sangli'];
+const CROPS     = ['Onion', 'Tomato', 'Soybean', 'Wheat', 'Maize', 'Grapes', 'Sugarcane'];
+const STAGES    = ['Growing', 'Near Harvest', 'Harvested / Stored'];
+
+const inputClass = "w-full bg-white border border-slate-200 text-slate-900 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all placeholder-slate-400";
+const labelClass = "block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5";
 
 export default function ProfileForm() {
   const router = useRouter();
@@ -11,15 +19,14 @@ export default function ProfileForm() {
     crop: 'Onion',
     quantity: '',
     stage: 'Near Harvest',
-    language: 'English',
+    language: 'Marathi',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // ensure quantity is a number if provided
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'quantity' ? (value ? Number(value) : '') : value
+      [name]: name === 'quantity' ? (value ? Number(value) : '') : value,
     }));
   };
 
@@ -31,76 +38,70 @@ export default function ProfileForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 mb-8">
-      <h3 className="font-bold text-gray-800 text-lg mb-4 text-center">Fill Your Details</h3>
-      
+    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+      <h2 className="font-bold text-slate-900 text-lg mb-5">Enter Your Details</h2>
+
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-semibold text-gray-500 mb-1">FARMER NAME</label>
-          <input 
+          <label className={labelClass}>Farmer Name</label>
+          <input
             type="text" name="name" required
             value={formData.name} onChange={handleChange}
-            placeholder="e.g. Tukaram"
-            className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
+            placeholder="e.g. Tukaram Shinde"
+            className={inputClass}
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1">DISTRICT</label>
-            <select 
-              name="district" 
-              value={formData.district} onChange={handleChange}
-              className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 appearance-none"
-            >
-              <option>Nashik</option>
-              <option>Pune</option>
-              <option>Ahmednagar</option>
-            </select>
+            <label className={labelClass}>District</label>
+            <div className="relative">
+              <select name="district" value={formData.district} onChange={handleChange}
+                className={`${inputClass} appearance-none pr-9 cursor-pointer`}>
+                {DISTRICTS.map(d => <option key={d}>{d}</option>)}
+              </select>
+              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+            </div>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1">CROP</label>
-            <select 
-              name="crop" 
-              value={formData.crop} onChange={handleChange}
-              className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 appearance-none"
-            >
-              <option>Onion</option>
-              <option>Tomato</option>
-              <option>Soybean</option>
-            </select>
+            <label className={labelClass}>Crop</label>
+            <div className="relative">
+              <select name="crop" value={formData.crop} onChange={handleChange}
+                className={`${inputClass} appearance-none pr-9 cursor-pointer`}>
+                {CROPS.map(c => <option key={c}>{c}</option>)}
+              </select>
+              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+            </div>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1">QUANTITY (QTL)</label>
-            <input 
+            <label className={labelClass}>Quantity (Qtl)</label>
+            <input
               type="number" name="quantity" required min="1"
               value={formData.quantity} onChange={handleChange}
               placeholder="e.g. 50"
-              className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all text-center"
+              className={inputClass}
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1">STAGE</label>
-            <select 
-              name="stage" 
-              value={formData.stage} onChange={handleChange}
-              className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-xl px-2 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 appearance-none text-center"
-            >
-              <option>Growing</option>
-              <option>Near Harvest</option>
-              <option>Harvested / Stored</option>
-            </select>
+            <label className={labelClass}>Stage</label>
+            <div className="relative">
+              <select name="stage" value={formData.stage} onChange={handleChange}
+                className={`${inputClass} appearance-none pr-9 cursor-pointer`}>
+                {STAGES.map(s => <option key={s}>{s}</option>)}
+              </select>
+              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+            </div>
           </div>
         </div>
 
-        <button 
+        <button
           type="submit"
-          className="w-full mt-2 bg-gray-900 hover:bg-black text-white font-bold py-4 rounded-xl text-md transition-all active:scale-[0.98]"
+          className="w-full mt-2 bg-slate-900 hover:bg-slate-800 active:bg-black text-white font-semibold py-3.5 rounded-lg text-sm transition-colors"
         >
-          Proceed to Dashboard →
+          View Market Analysis
         </button>
       </div>
     </form>

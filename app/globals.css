@@ -1,27 +1,47 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-brand-50: #f0fdf4;
-  --color-brand-100: #dcfce7;
-  --color-brand-500: #22c55e;
-  --color-brand-600: #16a34a;
-  --color-brand-700: #15803d;
-  --color-brand-800: #166534;
-  --color-brand-900: #14532d;
-  --color-amber-50: #fffbeb;
-  --color-amber-500: #f59e0b;
-  --color-amber-600: #d97706;
-  --font-sans: 'Inter', sans-serif;
+  /* Sage-green brand palette – easy on the eyes */
+  --color-brand-50: #f0fdf6;
+  --color-brand-100: #dcfaec;
+  --color-brand-200: #b4f1d0;
+  --color-brand-500: #1db96b;
+  --color-brand-600: #17a35e;
+  --color-brand-700: #128a4f;
+  --color-brand-800: #0e6f3f;
+  --color-brand-900: #0a4f2c;
+
+  /* Neutral slate palette */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-400: #94a3b8;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-900: #0f172a;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: #f9fafb;
-  color: #171717;
+  background: #f8fafc;
+  color: #0f172a;
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
-  }
+/* Remove default button flash on mobile */
+button {
+  -webkit-tap-highlight-color: transparent;
 }

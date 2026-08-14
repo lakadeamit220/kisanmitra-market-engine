@@ -1,88 +1,85 @@
-import { MapPin, TrendingUp, Truck, CircleDollarSign, BadgePercent, MoveDown } from 'lucide-react';
+import { MapPin, Truck, BadgePercent, CircleDollarSign, MoveDown, TrendingUp } from 'lucide-react';
 
 export default function MandiCard({ mandi }) {
   const isRecommended = mandi.rank === 1;
 
   return (
-    <div
-      className={`relative rounded-2xl overflow-hidden mb-4 ${
-        isRecommended
-          ? 'bg-gradient-to-br from-brand-50 to-brand-100 border-2 border-brand-500 shadow-xl shadow-brand-500/20 ring-1 ring-brand-400'
-          : 'bg-white border border-gray-200 shadow-md'
-      }`}
-    >
-      {/* Recommended Ribbon */}
-      {isRecommended && (
-        <div className="absolute top-0 right-0 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl z-10 flex items-center gap-1">
-          <TrendingUp size={14} /> RECOMMENDED
+    <div className={`bg-white rounded-xl border overflow-hidden shadow-sm transition-shadow hover:shadow-md ${
+      isRecommended ? 'border-brand-400 ring-1 ring-brand-300' : 'border-slate-200'
+    }`}>
+      {/* Top bar */}
+      <div className={`flex items-center justify-between px-4 py-2.5 ${
+        isRecommended ? 'bg-brand-600 text-white' : 'bg-slate-50 border-b border-slate-100'
+      }`}>
+        <div className="flex items-center gap-2">
+          <span className={`text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center ${
+            isRecommended ? 'bg-white text-brand-700' : 'bg-slate-200 text-slate-600'
+          }`}>
+            {mandi.rank}
+          </span>
+          <span className="text-sm font-semibold">{mandi.mandiName}</span>
         </div>
-      )}
-
-      {/* Rank Badge */}
-      <div className="absolute top-3 left-3 bg-gray-900 text-white font-black text-sm w-7 h-7 flex items-center justify-center rounded-full z-10 shadow-sm">
-        #{mandi.rank}
+        {isRecommended && (
+          <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-brand-100">
+            <TrendingUp size={11} /> Best Option
+          </span>
+        )}
+        {!isRecommended && (
+          <span className="flex items-center gap-1 text-xs text-slate-400">
+            <MapPin size={11} /> {mandi.distanceKm} km
+          </span>
+        )}
       </div>
 
-      <div className="p-4 pl-12 pt-4">
-        {/* Header */}
-        <div className="flex justify-between items-start mb-2">
-          <div>
-            <h3 className="font-bold text-lg text-gray-900">{mandi.mandiName}</h3>
-            <div className="flex items-center text-sm text-gray-500 gap-1 mt-0.5">
-              <MapPin size={14} />
-              {mandi.distanceKm} km away
+      <div className="px-4 py-3">
+        {/* Distance row (only for recommended, as top bar shows it for others) */}
+        {isRecommended && (
+          <div className="flex items-center gap-1 text-xs text-slate-400 mb-3">
+            <MapPin size={11} />
+            <span>{mandi.distanceKm} km away &middot; Headline ₹{mandi.headlinePrice}/qtl</span>
+          </div>
+        )}
+        {!isRecommended && (
+          <p className="text-xs text-slate-400 mb-3">Headline ₹{mandi.headlinePrice}/qtl</p>
+        )}
+
+        {/* Deductions grid */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 mb-3">
+          {[
+            { icon: Truck, label: 'Transport', value: mandi.transportCostPerQtl },
+            { icon: BadgePercent, label: 'Market Fee', value: mandi.marketFeePerQtl },
+            { icon: CircleDollarSign, label: 'Commission', value: mandi.commissionPerQtl },
+            { icon: MoveDown, label: 'Loading', value: mandi.loadingChargePerQtl },
+          ].map(({ icon: Icon, label, value }) => (
+            <div key={label} className="flex items-center justify-between text-xs">
+              <span className="flex items-center gap-1 text-slate-500">
+                <Icon size={11} className="text-slate-400 shrink-0" /> {label}
+              </span>
+              <span className="text-red-500 font-medium">-₹{value}</span>
             </div>
-          </div>
-          <div className="text-right">
-            <p className="text-xs text-gray-500 font-medium tracking-wide">HEADLINE PRICE</p>
-            <p className="font-semibold text-gray-400 line-through decoration-gray-400/50">
-              ₹{mandi.headlinePrice}/qtl
-            </p>
-          </div>
+          ))}
         </div>
 
-        <hr className="border-gray-200 my-3" />
-
-        {/* Breakdown */}
-        <div className="grid grid-cols-2 gap-y-2 gap-x-4 mb-4">
-          <div className="flex items-center justify-between text-xs text-gray-600">
-            <span className="flex items-center gap-1"><Truck size={12} className="text-gray-400" /> Transport</span>
-            <span className="font-medium text-red-500">-₹{mandi.transportCostPerQtl}</span>
-          </div>
-          <div className="flex items-center justify-between text-xs text-gray-600">
-            <span className="flex items-center gap-1"><BadgePercent size={12} className="text-gray-400" /> Market Fee</span>
-            <span className="font-medium text-red-500">-₹{mandi.marketFeePerQtl}</span>
-          </div>
-          <div className="flex items-center justify-between text-xs text-gray-600">
-            <span className="flex items-center gap-1"><CircleDollarSign size={12} className="text-gray-400" /> Commission</span>
-            <span className="font-medium text-red-500">-₹{mandi.commissionPerQtl}</span>
-          </div>
-          <div className="flex items-center justify-between text-xs text-gray-600">
-            <span className="flex items-center gap-1"><MoveDown size={12} className="text-gray-400" /> Loading</span>
-            <span className="font-medium text-red-500">-₹{mandi.loadingChargePerQtl}</span>
-          </div>
-        </div>
-
-        {/* Hero Number - Net Realization */}
-        <div className={`rounded-xl p-3 flex justify-between items-center ${isRecommended ? 'bg-brand-600' : 'bg-gray-50'}`}>
-          <div className={isRecommended ? 'text-brand-100' : 'text-gray-500'}>
-            <p className="text-xs font-bold tracking-wider mb-0.5">NET REALIZATION</p>
-            <p className="text-[10px] opacity-80">(After all costs)</p>
+        {/* Net Realization */}
+        <div className={`rounded-lg px-3 py-2.5 flex items-center justify-between ${
+          isRecommended ? 'bg-brand-50 border border-brand-200' : 'bg-slate-50 border border-slate-200'
+        }`}>
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Net Realization</p>
+            <p className="text-[10px] text-slate-400">After all deductions</p>
           </div>
           <div className="text-right">
-            <p className={`text-2xl font-black ${isRecommended ? 'text-white' : 'text-gray-800'}`}>
+            <p className={`text-xl font-black ${isRecommended ? 'text-brand-700' : 'text-slate-800'}`}>
               ₹{mandi.netPerQtl.toLocaleString('en-IN')}
             </p>
-            <p className={`text-[10px] font-medium ${isRecommended ? 'text-brand-100' : 'text-gray-500'}`}>
-              per quintal
-            </p>
+            <p className="text-[10px] text-slate-400">per quintal</p>
           </div>
         </div>
-        
-        {/* Total Earnings */}
-        <div className="mt-3 flex justify-between items-center bg-gray-50 border border-gray-100 rounded-lg p-2 px-3">
-          <span className="text-xs font-semibold text-gray-500">TOTAL EARNINGS</span>
-          <span className="text-sm font-bold text-gray-900">₹{mandi.totalNet.toLocaleString('en-IN')}</span>
+
+        {/* Total row */}
+        <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
+          <span className="text-xs text-slate-400 font-medium">Total Earnings</span>
+          <span className="text-sm font-bold text-slate-800">₹{mandi.totalNet.toLocaleString('en-IN')}</span>
         </div>
       </div>
     </div>

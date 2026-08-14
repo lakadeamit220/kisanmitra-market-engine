@@ -1,41 +1,30 @@
 import { Navigation, Scale, Leaf, Clock } from 'lucide-react';
 
+const CARDS = [
+  { icon: Leaf,       iconColor: 'text-brand-600', bg: 'bg-brand-50', label: 'Crop',     key: 'crop' },
+  { icon: Scale,      iconColor: 'text-blue-600',  bg: 'bg-blue-50',  label: 'Quantity', key: 'quantity', suffix: ' qtl' },
+  { icon: Navigation, iconColor: 'text-purple-600',bg: 'bg-purple-50',label: 'District', key: 'district' },
+  { icon: Clock,      iconColor: 'text-amber-600', bg: 'bg-amber-50', label: 'Stage',    key: 'stage' },
+];
+
 export default function DashboardCards({ profile }) {
   if (!profile) return null;
-  
+
   return (
-    <div className="grid grid-cols-2 gap-3 mb-6">
-      <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
-        <div className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-brand-600 mb-2">
-          <Leaf size={20} />
+    <div className="grid grid-cols-2 gap-3 mb-5">
+      {CARDS.map(({ icon: Icon, iconColor, bg, label, key, suffix }) => (
+        <div key={key} className="bg-white border border-slate-100 rounded-xl p-4 shadow-sm flex flex-col gap-2">
+          <div className={`w-9 h-9 rounded-lg ${bg} flex items-center justify-center`}>
+            <Icon size={18} className={iconColor} />
+          </div>
+          <div>
+            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">{label}</p>
+            <p className="font-semibold text-slate-900 text-sm mt-0.5 leading-tight">
+              {profile[key]}{suffix || ''}
+            </p>
+          </div>
         </div>
-        <p className="text-xs text-gray-500 font-medium">CROP</p>
-        <p className="font-bold text-gray-900">{profile.crop}</p>
-      </div>
-
-      <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
-        <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mb-2">
-          <Scale size={20} />
-        </div>
-        <p className="text-xs text-gray-500 font-medium">QUANTITY</p>
-        <p className="font-bold text-gray-900">{profile.quantity} qtl</p>
-      </div>
-
-      <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
-        <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 mb-2">
-          <Navigation size={20} />
-        </div>
-        <p className="text-xs text-gray-500 font-medium">DISTRICT</p>
-        <p className="font-bold text-gray-900">{profile.district}</p>
-      </div>
-
-      <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
-        <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 mb-2">
-          <Clock size={20} />
-        </div>
-        <p className="text-xs text-gray-500 font-medium">STAGE</p>
-        <p className="font-bold text-gray-900 text-sm leading-tight">{profile.stage}</p>
-      </div>
+      ))}
     </div>
   );
 }
