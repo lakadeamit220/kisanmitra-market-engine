@@ -18,6 +18,9 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#16a34a" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="KisanMitra" />
+        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
       </head>
       <body className={inter.className}>{children}</body>
     </html>
