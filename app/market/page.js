@@ -21,7 +21,7 @@ export default function MarketPage() {
       quantity: 120, stage: 'Near Harvest', language: 'Marathi',
     };
     setProfile(activeProfile);
-    setRankedMandis(rankMandis(mandis, activeProfile.quantity));
+    setRankedMandis(rankMandis(mandis, activeProfile));
   }, []);
 
   if (!profile || rankedMandis.length === 0) return null;
