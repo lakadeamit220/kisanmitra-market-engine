@@ -4,13 +4,6 @@ KisanMitra is a Progressive Web Application (PWA) designed to help farmers in Ma
 
 **Live Application**: [https://kisanmitra-market-engine.vercel.app/](https://kisanmitra-market-engine.vercel.app/)
 
-### Quick Deploy
-
-Click the button below to deploy your own instance of KisanMitra instantly to Vercel. 
-Note: The Gemini API Key is built into the codebase for this specific deployment, making this a zero-configuration launch.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flakadeamit220%2Fkisanmitra-market-engine)
-
 ---
 
 ## Technical Stack
