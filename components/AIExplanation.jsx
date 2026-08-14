@@ -37,7 +37,7 @@ export default function AIExplanation({ rankedMandis, profile }) {
     <div className="mt-4 bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
       <div className="border-b border-slate-100 pb-3 mb-4">
         <h3 className="font-bold text-slate-900 text-sm">AI Market Analysis</h3>
-        <p className="text-xs text-slate-400 mt-0.5">Powered by Google Gemini</p>
+        <p className="text-xs text-slate-400 mt-0.5">Powered by Llama 3 (Groq)</p>
       </div>
 
       {loading && (

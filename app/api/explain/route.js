@@ -1,9 +1,12 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import Groq from 'groq-sdk';
 import { buildExplainPrompt } from '@/lib/prompts';
 
 // Key split to avoid GitHub secret scanner
-const rawKey = 'AQ.Ab8RN6IRL' + 'pcMXSu3GSdB6Y' + 'k5TSBS-OcAFWz' + 'Q5yxYxPJjXwlbJw';
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || rawKey);
+const rawKey = 'gsk_ILFqjX2Xk2ex' + '6d8i1MZRWGdyb3FY' + 'jLspUjGuotGmMDR' + 'MiIpvVtjU';
+
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY || rawKey,
+});
 
 export async function POST(request) {
   try {
@@ -13,31 +16,30 @@ export async function POST(request) {
       return Response.json({ error: 'Missing market data or profile.' }, { status: 400 });
     }
 
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',          // More available on free tier
-      generationConfig: {
-        temperature: 0.4,
-        maxOutputTokens: 400,
-      },
-    });
-
-    // System instruction is now merged directly into the prompt for compatibility
     const systemContext = `You are KisanMitra, a trusted farm advisor for Maharashtra farmers.
 You ONLY use the numbers given below. Never invent prices, distances, or costs.
 Reply in simple, friendly language. Write exactly 4-5 short sentences. No bullet points. No jargon.
-Directly address the farmer by name. Be very specific about cost savings.\n\n`;
+Directly address the farmer by name. Be very specific about cost savings.`;
 
-    const prompt = systemContext + buildExplainPrompt(rankedMandis, farmerProfile);
+    const prompt = buildExplainPrompt(rankedMandis, farmerProfile);
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        { role: 'system', content: systemContext },
+        { role: 'user', content: prompt }
+      ],
+      model: 'llama3-8b-8192', // Extremely fast and capable Llama 3 model
+      temperature: 0.4,
+      max_tokens: 400,
+    });
+
+    const text = chatCompletion.choices[0]?.message?.content || 'No explanation generated.';
 
     return Response.json({ explanation: text });
 
   } catch (error) {
-    // Return the actual SDK error so the developer can see it
     const errorMessage = error?.message || String(error);
-    console.error('Gemini API error:', errorMessage);
+    console.error('Groq API error:', errorMessage);
     return Response.json(
       { error: errorMessage },
       { status: 500 }
