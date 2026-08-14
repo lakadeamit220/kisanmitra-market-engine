@@ -28,7 +28,7 @@ Directly address the farmer by name. Be very specific about cost savings.`;
         { role: 'system', content: systemContext },
         { role: 'user', content: prompt }
       ],
-      model: 'llama3-8b-8192', // Extremely fast and capable Llama 3 model
+      model: 'llama-3.1-8b-instant', // Extremely fast and capable Llama 3.1 model
       temperature: 0.4,
       max_tokens: 400,
     });
