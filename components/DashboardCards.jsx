@@ -1,14 +1,16 @@
 import { Navigation, Scale, Leaf, Clock } from 'lucide-react';
-
-const CARDS = [
-  { icon: Leaf,       iconColor: 'text-brand-600', bg: 'bg-brand-50', label: 'Crop',     key: 'crop' },
-  { icon: Scale,      iconColor: 'text-blue-600',  bg: 'bg-blue-50',  label: 'Quantity', key: 'quantity', suffix: ' qtl' },
-  { icon: Navigation, iconColor: 'text-purple-600',bg: 'bg-purple-50',label: 'District', key: 'district' },
-  { icon: Clock,      iconColor: 'text-amber-600', bg: 'bg-amber-50', label: 'Stage',    key: 'stage' },
-];
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function DashboardCards({ profile }) {
+  const { t } = useLanguage();
   if (!profile) return null;
+
+  const CARDS = [
+    { icon: Leaf,       iconColor: 'text-brand-600', bg: 'bg-brand-50', label: t('crop'),     key: 'crop' },
+    { icon: Scale,      iconColor: 'text-blue-600',  bg: 'bg-blue-50',  label: t('quantity'), key: 'quantity', suffix: ` ${t('qtl')}` },
+    { icon: Navigation, iconColor: 'text-purple-600',bg: 'bg-purple-50',label: t('district'), key: 'district' },
+    { icon: Clock,      iconColor: 'text-amber-600', bg: 'bg-amber-50', label: t('stage'),    key: 'stage' },
+  ];
 
   return (
     <div className="grid grid-cols-2 gap-3 mb-5">

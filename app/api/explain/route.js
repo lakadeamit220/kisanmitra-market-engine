@@ -16,10 +16,14 @@ export async function POST(request) {
       return Response.json({ error: 'Missing market data or profile.' }, { status: 400 });
     }
 
-    const systemContext = `You are KisanMitra, a trusted farm advisor for Maharashtra farmers.
+    let systemContext = `You are KisanMitra, a trusted farm advisor for Maharashtra farmers.
 You ONLY use the numbers given below. Never invent prices, distances, or costs.
 Reply in simple, friendly language. Write exactly 4-5 short sentences. No bullet points. No jargon.
 Directly address the farmer by name. Be very specific about cost savings.`;
+
+    if (farmerProfile?.language === 'Marathi' || request.headers.get('accept-language')?.includes('mr')) {
+      systemContext += `\n\nCRITICAL INSTRUCTION: You MUST write your ENTIRE final response strictly in native Marathi (Devanagari script) only.`;
+    }
 
     const prompt = buildExplainPrompt(rankedMandis, farmerProfile);
 

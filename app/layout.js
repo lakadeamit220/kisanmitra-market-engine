@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Script from 'next/script';
+import { LanguageProvider } from '@/lib/LanguageContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" href="/icons/icon-192.svg" />
       </head>
       <body className={inter.className}>
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
         <Script id="sw-register" strategy="afterInteractive">
           {`
             if ('serviceWorker' in navigator) {

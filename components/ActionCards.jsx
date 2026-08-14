@@ -2,8 +2,10 @@ import { CheckCircle2, AlertTriangle, Info } from 'lucide-react';
 import Link from 'next/link';
 import { rankMandis } from '@/lib/calculations';
 import mandis from '@/lib/mockMandis';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function ActionCards({ profile }) {
+  const { t } = useLanguage();
   if (!profile) return null;
 
   // Calculate live market advice specifically for this user
@@ -17,8 +19,8 @@ export default function ActionCards({ profile }) {
       color: 'bg-brand-500',
       iconColor: 'text-brand-600',
       bg: 'bg-brand-50 border-brand-100',
-      title: 'Make Market Decision Today',
-      body: `Prices at ${bestMandi.mandiName} are currently strong. You have a chance to secure ₹${bestMandi.netPerQtl.toLocaleString('en-IN')} net realization per quintal considering local transport.`,
+      title: t('action_decision_title'),
+      body: t('action_decision_body', { mandi: bestMandi.mandiName, price: bestMandi.netPerQtl.toLocaleString('en-IN') }),
       href: '/market',
     },
     {
@@ -26,8 +28,8 @@ export default function ActionCards({ profile }) {
       color: 'bg-amber-400',
       iconColor: 'text-amber-500',
       bg: 'bg-amber-50 border-amber-100',
-      title: 'Monitor Weather This Week',
-      body: 'Rain is predicted in 3 days. Consider harvesting mature sections within the next 36 hours to avoid crop damage.',
+      title: t('action_weather_title'),
+      body: t('action_weather_body'),
       href: null,
     },
     {
@@ -35,8 +37,8 @@ export default function ActionCards({ profile }) {
       color: 'bg-red-500',
       iconColor: 'text-red-500',
       bg: 'bg-red-50 border-red-100',
-      title: 'Avoid Distant Markets',
-      body: `Despite a headline price of ₹${distantMandi.headlinePrice} at ${distantMandi.mandiName}, massive transport costs reduce your net to ₹${distantMandi.netPerQtl.toLocaleString('en-IN')}/qtl. Do not sell here.`,
+      title: t('action_avoid_title'),
+      body: t('action_avoid_body', { headline: distantMandi.headlinePrice, mandi: distantMandi.mandiName, net: distantMandi.netPerQtl.toLocaleString('en-IN') }),
       href: null,
     },
   ];
@@ -44,7 +46,7 @@ export default function ActionCards({ profile }) {
   return (
     <section className="mt-6">
       <h2 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-3">
-        Today's Action Plan
+        {t('action_plan')}
       </h2>
       <div className="space-y-2.5">
         {actions.map(({ icon: Icon, color, iconColor, bg, title, body, href }) => {

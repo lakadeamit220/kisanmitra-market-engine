@@ -4,6 +4,8 @@ import { saveProfile } from '@/lib/storage';
 import { useRouter } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
 
+import { useLanguage } from '@/lib/LanguageContext';
+
 const DISTRICTS = ['Nashik', 'Pune', 'Ahmednagar', 'Aurangabad', 'Solapur', 'Kolhapur', 'Satara', 'Sangli'];
 const CROPS     = ['Onion', 'Tomato', 'Soybean', 'Wheat', 'Maize', 'Grapes', 'Sugarcane'];
 const STAGES    = ['Growing', 'Near Harvest', 'Harvested / Stored'];
@@ -13,6 +15,7 @@ const labelClass = "block text-xs font-semibold text-slate-500 uppercase trackin
 
 export default function ProfileForm() {
   const router = useRouter();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     district: 'Nashik',
@@ -39,11 +42,11 @@ export default function ProfileForm() {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-      <h2 className="font-bold text-slate-900 text-lg mb-5">Enter Your Details</h2>
+      <h2 className="font-bold text-slate-900 text-lg mb-5">{t('enter_details')}</h2>
 
       <div className="space-y-4">
         <div>
-          <label className={labelClass}>Farmer Name</label>
+          <label className={labelClass}>{t('farmer_name')}</label>
           <input
             type="text" name="name" required
             value={formData.name} onChange={handleChange}
@@ -54,7 +57,7 @@ export default function ProfileForm() {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className={labelClass}>District</label>
+            <label className={labelClass}>{t('district')}</label>
             <div className="relative">
               <select name="district" value={formData.district} onChange={handleChange}
                 className={`${inputClass} appearance-none pr-9 cursor-pointer`}>
@@ -64,7 +67,7 @@ export default function ProfileForm() {
             </div>
           </div>
           <div>
-            <label className={labelClass}>Crop</label>
+            <label className={labelClass}>{t('crop')}</label>
             <div className="relative">
               <select name="crop" value={formData.crop} onChange={handleChange}
                 className={`${inputClass} appearance-none pr-9 cursor-pointer`}>
@@ -77,16 +80,16 @@ export default function ProfileForm() {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className={labelClass}>Quantity (Qtl)</label>
+            <label className={labelClass}>{t('quantity')}</label>
             <input
               type="number" name="quantity" required min="1"
               value={formData.quantity} onChange={handleChange}
-              placeholder="e.g. 50"
+              placeholder="50"
               className={inputClass}
             />
           </div>
           <div>
-            <label className={labelClass}>Stage</label>
+            <label className={labelClass}>{t('stage')}</label>
             <div className="relative">
               <select name="stage" value={formData.stage} onChange={handleChange}
                 className={`${inputClass} appearance-none pr-9 cursor-pointer`}>
@@ -101,7 +104,7 @@ export default function ProfileForm() {
           type="submit"
           className="w-full mt-2 bg-slate-900 hover:bg-slate-800 active:bg-black text-white font-semibold py-3.5 rounded-lg text-sm transition-colors"
         >
-          View Market Analysis
+          {t('view_analysis')}
         </button>
       </div>
     </form>
