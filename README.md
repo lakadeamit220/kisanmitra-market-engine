@@ -2,6 +2,8 @@
 
 KisanMitra is a Progressive Web Application (PWA) designed to help farmers in Maharashtra make data-driven decisions on where to sell their crops. The application calculates the true "Net Realization" (profit after transport, market fees, commission, and loading charges) across multiple APMC Mandis. By comparing regional prices against exact logistical deductions, it protects farmers from relying solely on headline prices which are often misleading due to hidden local transport costs.
 
+**Live Application**: [https://kisanmitra-market-engine.vercel.app/](https://kisanmitra-market-engine.vercel.app/)
+
 ### Quick Deploy
 
 Click the button below to deploy your own instance of KisanMitra instantly to Vercel. 
