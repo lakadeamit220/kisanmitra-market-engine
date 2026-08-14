@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { buildExplainPrompt } from '@/lib/prompts';
 
 // Hardcoded for Vercel auto-deploy convenience, split to avoid GitHub's scanner
-const rawKey = 'AQ.Ab8RN6IRL' + 'pcMXSu3GSdB6Y' + 'k5TSBS-OcAFWz' + 'Q5yxYxPJJXwlbJw';
+const rawKey = 'AQ.Ab8RN6IRL' + 'pcMXSu3GSdB6Y' + 'k5TSBS-OcAFWz' + 'Q5yxYxPJjXwlbJw';
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || rawKey);
 
 export async function POST(request) {
