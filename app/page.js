@@ -7,9 +7,6 @@ export default function Home() {
       {/* Hero Header */}
       <div className="bg-brand-800 text-white pt-16 pb-14 px-6 shadow-sm">
         <div className="max-w-lg mx-auto text-center">
-          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-brand-200 mb-3">
-            Farmer Market Intelligence
-          </p>
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-3">
             KisanMitra
           </h1>
