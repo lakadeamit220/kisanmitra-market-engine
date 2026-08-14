@@ -1,8 +1,12 @@
+'use client';
 import LoadDemoButton from '@/components/LoadDemoButton';
 import ProfileForm from '@/components/ProfileForm';
 import LanguageToggle from '@/components/LanguageToggle';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <main className="min-h-screen bg-slate-50 relative">
       {/* Absolute Language Toggle for unauthenticated users */}
@@ -27,7 +31,7 @@ export default function Home() {
 
         <div className="flex items-center gap-4 my-6">
           <div className="h-px bg-slate-200 flex-1"></div>
-          <span className="text-xs text-slate-400 font-semibold uppercase tracking-widest">or</span>
+          <span className="text-xs text-slate-400 font-semibold uppercase tracking-widest">{t('or')}</span>
           <div className="h-px bg-slate-200 flex-1"></div>
         </div>
 
